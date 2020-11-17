@@ -29,7 +29,7 @@ const m = createMachine<{ actor: ActorRefFrom<typeof child> | null }>(
   },
   {
     actions: {
-      spawnActor: assign({
+      spawnActor: assign<{ actor: ActorRefFrom<typeof child> | null }>({
         actor: () => spawn(child),
       }),
     },
