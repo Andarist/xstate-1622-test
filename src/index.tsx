@@ -1,8 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { createMachine, assign, spawn } from "xstate";
+import { createMachine, assign, spawn, ActorRefFrom } from "xstate";
 import { useActor, useMachine } from "@xstate/react";
-import { ActorRefFrom } from "@xstate/react/lib/types";
 
 const child = createMachine<{ bar: number }, { type: "FOO"; data: number }>({
   id: "myActor",
@@ -29,7 +28,7 @@ const m = createMachine<{ actor: ActorRefFrom<typeof child> | null }>(
   },
   {
     actions: {
-      spawnActor: assign({
+      spawnActor: assign<{ actor: ActorRefFrom<typeof child> | null }>({
         actor: () => spawn(child),
       }),
     },
